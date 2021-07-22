@@ -1,9 +1,12 @@
+# main links
 main:
-  - title: "Posts"
-    url: /posts/
-  - title: "Categories"
-    url: /categories/
-  - title: "Tags"
-    url: /tags/
   - title: "About"
     url: /about/
+  - title: "Posts"
+    url: /posts/
+  - title: "Projects"
+    url: /projects/
+  - title: "Categories"
+    url: /categories/
+  - title: "Newsletter"
+    url: https://sauravmaheshkar.substack.com/welcome
