@@ -1,6 +1,7 @@
 ---
 permalink: /about/
 layout: single
+classes: wide
 author_profile: true
 ---
 
@@ -13,9 +14,3 @@ I hope to pursue my Bachelors ( Hopefully with integrated masters ) from the Uni
 I’m currently learning about **Attention**, **Self-Supervised Representation Learning**, **Graphical Models** and **Medical Imaging (Prognosis, some regression analysis as well)**.
 
 I’ve worked a lot with Tensorflow, Pytorch, JAX Based ecosystems (Trax, Flax, Objax, …). I’m almost done with Cynthia Dwork’s book The Algorithmic Foundations of Differential Privacy. I’ve been reading some academic papers in Differential Privacy for about 3 months and am interested to learn how to deploy these systems in production.
-
-- 🤔 I’m currently working on the [OpenVaccine Challenge](https://github.com/SauravMaheshkar/OpenVaccine) and [Model Compression](https://github.com/SauravMaheshkar/Compressed-DNNs-Forget)
-- 💬 Ask me about Deep Learning or any Tensorflow related stuff.
-- 📫 How to reach me: My Social Handles are linked in the author profile
-- 📃 My [Newsletter](https://sauravmaheshkar.substack.com/welcome)
-- 😄 Pronouns: He/His
