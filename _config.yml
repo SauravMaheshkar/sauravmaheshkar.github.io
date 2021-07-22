@@ -7,7 +7,6 @@ description: >-
 teaser: /assets/images/Teaser.png
 twitter_username: MaheshkarSaurav
 github_username: SauravMaheshkar
-theme: minimal-mistakes-jekyll
 minimal_mistakes_skin: dark
 search: true
 
@@ -16,7 +15,7 @@ markdown: kramdown
 kramdown:
   math_engine: mathjax
   toc_levels: 1..2
-# remote_theme: mmistakes/minimal-mistakes
+remote_theme: mmistakes/minimal-mistakes
 
 # Outputting
 permalink: /:categories/:title/
