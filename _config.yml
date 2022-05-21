@@ -28,8 +28,10 @@ plugins:
   - jekyll-include-cache
 
 author:
-  name   : "Saurav Maheshkar"
+  name : "Saurav Maheshkar"
   avatar : "/assets/images/bio.jpg"
+  bio : "ML Engineer, Open Source Contributor, Writer"
+  location : "New Delhi, India"
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
