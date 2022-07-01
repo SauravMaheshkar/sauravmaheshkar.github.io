@@ -43,7 +43,7 @@ author:
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/sauravvmaheshkar"
     - label: "LinkedIn"
-      icon: "fa fa-fw fa-linkedin-square"
+      icon: "fa fa-linkedin-square"
       url: "https://www.linkedin.com/in/sauravmaheshkar/"
 
 footer:
@@ -57,6 +57,9 @@ footer:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/sauravvmaheshkar"
+    - label: "LinkedIn"
+      icon: "fa fa-linkedin-square"
+      url: "https://www.linkedin.com/in/sauravmaheshkar/"
 
 defaults:
   # _posts
