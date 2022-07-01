@@ -58,7 +58,7 @@ footer:
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/sauravvmaheshkar"
     - label: "LinkedIn"
-      icon: "fab fa-linkedin"
+      icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/sauravmaheshkar/"
 
 defaults:
