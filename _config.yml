@@ -13,7 +13,10 @@ remote_theme: mmistakes/minimal-mistakes
 # Outputting
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
-paginate_path: /page:num/
+paginate_path: /page:num/ 
+
+# For utterances
+repository: "SauravMaheshkar/sauravmaheshkar.github.io"
 
 include:
   - _pages
@@ -67,6 +70,7 @@ defaults:
       path: ""
       type: posts
     values:
+      show_date: true
       layout: single
       author_profile: true
       read_time: true
@@ -87,3 +91,9 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+  
+comments:
+  provider: "utterances"
+  utterances:
+    theme: "github-light"
+    issue_term: "pathname"
