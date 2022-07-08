@@ -1,6 +1,6 @@
 ---
 title: "How to use 8 bit Optimizers in PyTorch"
-date: 2022-07-09
+date: 2022-07-08
 categories: 
   - Aritificial Intelligence
   - Neural Networks
