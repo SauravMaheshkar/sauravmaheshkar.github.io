@@ -5,5 +5,7 @@ main:
     url: /categories/
   - title: "Tags"
     url: /tags/
+  - title: "Open Source"
+    url: /opensource/
   - title: "Resume"
     url: https://read.cv/sym
