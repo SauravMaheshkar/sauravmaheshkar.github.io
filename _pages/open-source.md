@@ -2,6 +2,7 @@
 permalink: /opensource/
 title: "Open Source"
 toc: true
+toc_sticky: true
 ---
 Non-Exhaustive List of Open Source Contributions:
 
