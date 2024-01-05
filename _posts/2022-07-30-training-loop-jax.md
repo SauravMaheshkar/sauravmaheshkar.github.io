@@ -2,8 +2,6 @@
 title: "Writing a Training Loop in JAX + FLAX"
 date: 2022-07-30
 categories: 
-  - Aritificial Intelligence
-  - Neural Networks
   - Programming
 tags:
   - JAX
