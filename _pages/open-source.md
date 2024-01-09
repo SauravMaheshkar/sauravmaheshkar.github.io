@@ -20,7 +20,6 @@ Non-Exhaustive List of Open Source Contributions:
 * [jraph](https://github.com/google-deepmind/jraph)
 * [soumik12345/jax-series](https://github.com/soumik12345/jax-series)
 * [n2cholas/jax-resnet](https://github.com/n2cholas/jax-resnet)
-* [matthias-wright/jax-fid](https://github.com/matthias-wright/jax-fid)
 
 ## Geometric Deep Learning Ecosystem
 * [pyg-team/pytorch_geometric](https://github.com/pyg-team/pytorch_geometric)
