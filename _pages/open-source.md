@@ -24,6 +24,7 @@ Non-Exhaustive List of Open Source Contributions:
 ## Geometric Deep Learning Ecosystem
 * [pyg-team/pytorch_geometric](https://github.com/pyg-team/pytorch_geometric)
 * [pyg-team/pyg-lib](https://github.com/pyg-team/pyg-lib)
+* [e3nn/e3nn](https://github.com/e3nn/e3nn)
 * [DeepGraphLearning/torchdrug](https://github.com/DeepGraphLearning/torchdrug)
 * [BenevolentAI/guacamol](https://github.com/BenevolentAI/guacamol)
 * [diningphil/PyDGN](https://github.com/diningphil/PyDGN)
