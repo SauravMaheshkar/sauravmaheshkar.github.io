@@ -3,12 +3,14 @@ permalink: /talks/
 title: "Talks"
 ---
 Talks I've delivered over the years:
-* "**LoRA and Friends**" delivered at AICamp London Dec. 2023, Devfest (Warwick) Nov. 2023 ([Recording Available](https://youtu.be/l6z5HLhWVVE?si=RiXfJReC8bSx2pkH&t=2713))
+* "**LoRA and Friends**" delivered at AICamp London Dec. 2023, Devfest (Warwick) Nov. 2023 ([Recording Available](https://youtu.be/l6z5HLhWVVE?si=RiXfJReC8bSx2pkH&t=2713)) ([Slides](https://docs.google.com/presentation/d/1nsfQnwbNOzyod5pQIBNIxBf7uDyJAT-YYMi7UkmMBjA/edit?usp=sharing))
 
-* "**Pretrained Transformers: BERT and RoBERTa**" delivered at LLM Bootcamp-Zero to Hero in LLMs ([Recording Available](https://youtu.be/l6z5HLhWVVE?si=RiXfJReC8bSx2pkH&t=2713))
+* "**Pretrained Transformers: BERT and RoBERTa**" delivered at LLM Bootcamp-Zero to Hero in LLMs ([Recording Available](https://youtu.be/l6z5HLhWVVE?si=RiXfJReC8bSx2pkH&t=2713)) ([Slides](https://docs.google.com/presentation/d/1lqSv7LPg_pvcyEF-z2UDROniXNGuCbabG5HzI0J5Sx4/edit?usp=sharing&resourcekey=0-r5YJFwRPXlkvblxC9b-8yA))
 
-* "**CI/CD and Containerization for Machine Learning**" delivered at Docker Meetup Bangalore Aug. 2023
+* "**CI/CD and Containerization for Machine Learning**" delivered at Docker Meetup Bangalore Aug. 2023 ([Slides](https://docs.google.com/presentation/d/1-ngLIkzB9sPIG6DxDAryisLR9BBiZPBjA0tiaAkUKhE/edit?usp=sharing))
 
-* "**Dev Environments for Machine Learning**" delivered at Pie and AI Meetup Bangalore July 2023
+* "**Dev Environments for Machine Learning**" delivered at Pie and AI Meetup Bangalore July 2023 ([Slides](https://docs.google.com/presentation/d/128cD7uNVtIZ5UcL7Zwyc3fLTuVoFKnybSqMODG1FLhE/edit?usp=sharing))
 
-* "**Benchmarking Self Supervised Learning Methods**" delivered at GenAI Gurus Meetup Sep. 2023, Keras Community Days Aug. 2023, TFUG Bangalore July 2023 ([Recording Available](https://www.youtube.com/watch?v=9gsIdhaWI5s))
+* "**Benchmarking Self Supervised Learning Methods**" delivered at GenAI Gurus Meetup Sep. 2023, Keras Community Days Aug. 2023, TFUG Bangalore July 2023 ([Recording Available](https://www.youtube.com/watch?v=9gsIdhaWI5s)) ([Slides](https://docs.google.com/presentation/d/1_Op85Sm0IEje_ZWFTuzQIFl3Lz7MGl49tRJKaXXDvTM/edit?usp=sharing&resourcekey=0-gHlvytPDkCiIWXnonDsiFg))
+
+* "**Introduction to Deep Learning**" delivered at the Summer Analytics Course by C&A IIT Guwahati June 2024 ([Slides](https://docs.google.com/presentation/d/1mb84nQk-Zdqg1h81IWwYbGIU1i2BY0nPqhozElG_wQg/edit?usp=sharing))
