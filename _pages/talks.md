@@ -14,3 +14,5 @@ Talks I've delivered over the years:
 * "**Benchmarking Self Supervised Learning Methods**" delivered at GenAI Gurus Meetup Sep. 2023, Keras Community Days Aug. 2023, TFUG Bangalore July 2023 ([Recording Available](https://www.youtube.com/watch?v=9gsIdhaWI5s)) ([Slides](https://docs.google.com/presentation/d/1_Op85Sm0IEje_ZWFTuzQIFl3Lz7MGl49tRJKaXXDvTM/edit?usp=sharing&resourcekey=0-gHlvytPDkCiIWXnonDsiFg))
 
 * "**Introduction to Deep Learning**" delivered at the Summer Analytics Course by C&A IIT Guwahati June 2024 ([Slides](https://docs.google.com/presentation/d/1mb84nQk-Zdqg1h81IWwYbGIU1i2BY0nPqhozElG_wQg/edit?usp=sharing))
+  
+* "**Knowledge Distillation using MAEs**" delivered at the LightlyAI Reading Group July 2024 ([Slides](https://docs.google.com/presentation/d/1Uff8grUS435GlJ1TyRuoqQh8qVdT_OSMxLE3nHahpIE/edit?usp=sharing))
