@@ -15,4 +15,4 @@ Talks I've delivered over the years:
 
 * "**Introduction to Deep Learning**" delivered at the Summer Analytics Course by C&A IIT Guwahati June 2024 ([Slides](https://docs.google.com/presentation/d/1mb84nQk-Zdqg1h81IWwYbGIU1i2BY0nPqhozElG_wQg/edit?usp=sharing))
   
-* "**Knowledge Distillation using MAEs**" delivered at the LightlyAI Reading Group July 2024 ([Slides](https://docs.google.com/presentation/d/1Uff8grUS435GlJ1TyRuoqQh8qVdT_OSMxLE3nHahpIE/edit?usp=sharing))
+* "**Knowledge Distillation using MAEs**" delivered at the LightlyAI Reading Group July 2024 ([Recording Available](https://drive.google.com/file/d/1bzuOab5fvKK7jpxv5bMoGk1gW446SCUL/view)) ([Slides](https://docs.google.com/presentation/d/1Uff8grUS435GlJ1TyRuoqQh8qVdT_OSMxLE3nHahpIE/edit?usp=sharing))
