@@ -17,6 +17,6 @@ Talks I've delivered over the years:
   
 * "**Knowledge Distillation using MAEs**" delivered at the LightlyAI Reading Group July 2024 ([Recording Available](https://drive.google.com/file/d/1bzuOab5fvKK7jpxv5bMoGk1gW446SCUL/view)) ([Slides](https://docs.google.com/presentation/d/1Uff8grUS435GlJ1TyRuoqQh8qVdT_OSMxLE3nHahpIE/edit?usp=sharing))
 
-* **Rapidly Prototyping RAG applications using Local Models** delivered at AICamp London Aug. 2024 ([Slides](https://docs.google.com/presentation/d/1DZEElX6fmMYIVdmQ0mSdFp_fTmWnvxbBAe3ggqt4dxI/edit?usp=sharing))
+* **Rapidly Prototyping RAG applications using Local Models** delivered at AICamp London Aug. 2024, PyData MCR Sep. 2024 ([Slides](https://docs.google.com/presentation/d/1DZEElX6fmMYIVdmQ0mSdFp_fTmWnvxbBAe3ggqt4dxI/edit?usp=sharing))
 
 * "**POA: Pre-Training Once for Models of All Sizes**" delivered at the LightlyAI Reading Group August 2024 ([Slides](https://docs.google.com/presentation/d/1BXg309qYcEWCtR5z1OjFK_TTj-w1-QGPGef3UW-LfhI/edit?usp=sharing))
