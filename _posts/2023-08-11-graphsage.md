@@ -1,6 +1,6 @@
 ---
 title: An Introduction to GraphSAGE
-date: 2022-08-11
+date: 2023-08-11
 categories:
   - Paper Summaries
 tags:

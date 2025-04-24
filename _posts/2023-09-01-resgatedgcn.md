@@ -1,6 +1,6 @@
 ---
 title: A Brief Introduction to Residual Gated Graph Convolutional Networks
-date: 2022-09-01
+date: 2023-09-01
 categories:
   - Paper Summaries
 tags:
