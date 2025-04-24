@@ -1,5 +1,5 @@
 ---
-title: Chain-of-thought, tree-of-thought, and graph-of-thought | Prompting techniques explained
+title: Chain-of-thought, tree-of-thought, and graph-of-thought - Prompting techniques explained
 date: 2024-06-26
 categories:
   - LLMs
