@@ -1,0 +1,65 @@
+baseURL: "https://sauravmaheshkar.github.io"
+title: Saurav :)
+theme: ["PaperMod"]
+
+languageCode: en-us
+
+enableRobotsTXT: true
+buildDrafts: false
+enableEmoji: true
+
+outputFormats:
+  llms:
+    mediaType: "text/plain"
+    baseName: "llms"
+    isPlainText: true
+    notAlternative: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+    - llms
+
+menu:
+  main:
+    - identifier: Archives
+      name: Archives
+      url: /archives/
+      weight: 10
+    - identifier: Talks
+      name: Talks
+      url: /talks/
+      weight: 20
+
+params:
+  defaultTheme: dark
+  disableThemeToggle: true
+
+  ShowPostNavLinks: true
+  ShowCodeCopyButtons: true
+
+  externalLinks:
+    enable: true
+
+  homeInfoParams:
+    Title: "Hi there 👋"
+    Content: >
+      - I currently work with structures and grammars at [dottxt](https://dottxt.ai/) 
+
+      - I'm interested in Representation Learning with a specific liking for Geometric Learning and Self Supervised Learning
+
+      - Lately I'm also interested in Systems Programming [rust kernel](https://github.com/SauravMaheshkar/os1) I built for my bachelors thesis
+
+      - I am a Google Developer Expert in Machine Learning
+
+      - I enjoy delivering talks you can find the materials [here](https://sauravmaheshkar.github.io/talks/)
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/SauravMaheshkar"
+    - name: twitter
+      url: "https://twitter.com/MaheshkarSaurav"
+    - name: linkedin
+      url: "https://instagram.com/sauravvmaheshkar"
