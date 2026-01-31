@@ -1,1 +1,1 @@
-[![pages-build-deployment](https://github.com/SauravMaheshkar/sauravmaheshkar.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/SauravMaheshkar/sauravmaheshkar.github.io/actions/workflows/pages/pages-build-deployment)
+[![Deploy Hugo site to Pages](https://github.com/SauravMaheshkar/sauravmaheshkar.github.io/actions/workflows/hugo.yaml/badge.svg?branch=main)](https://github.com/SauravMaheshkar/sauravmaheshkar.github.io/actions/workflows/hugo.yaml)
