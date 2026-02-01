@@ -2,6 +2,7 @@
 layout: external-redirect
 title: What Are Intrinsic Dimensions? The Secret Behind LoRA
 date: 2023-11-25
+highlight: true
 tags:
   - LoRA
   - JAX
