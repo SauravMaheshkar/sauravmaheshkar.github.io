@@ -40,9 +40,6 @@ params:
   ShowPostNavLinks: true
   ShowCodeCopyButtons: true
 
-  externalLinks:
-    enable: true
-
   homeInfoParams:
     Title: "Hi there 👋"
     Content: >
