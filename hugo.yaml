@@ -43,11 +43,11 @@ params:
   homeInfoParams:
     Title: "Hi there 👋"
     Content: >
-      - I currently work with structures and grammars at [dottxt](https://dottxt.ai/) 
+      - I currently work with structures and grammars at [dottxt](https://dottxt.ai/)
 
       - I'm interested in Representation Learning with a specific liking for Geometric Learning and Self Supervised Learning
 
-      - Lately I'm also interested in Systems Programming [rust kernel](https://github.com/SauravMaheshkar/os1) I built for my bachelors thesis
+      - Lately I'm also interested in Systems Programming (Check out the [rust kernel](https://github.com/SauravMaheshkar/os1) I built for my bachelors thesis)
 
       - I am a Google Developer Expert in Machine Learning
 
