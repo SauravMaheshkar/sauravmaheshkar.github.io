@@ -1,0 +1,184 @@
+{{- /* Footer custom content area start */ -}}
+{{- if .IsHome }}
+<div class="globe-section">
+  <div class="globe-wrap">
+    <canvas class="globe-canvas"></canvas>
+    <canvas class="globe-arcs"></canvas>
+  </div>
+</div>
+
+<style>
+  .globe-section {
+    display: flex;
+    justify-content: center;
+    margin: 10px auto 30px;
+  }
+  .globe-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1 / 1;
+  }
+  .globe-canvas,
+  .globe-arcs {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    contain: layout paint size;
+  }
+  .globe-canvas {
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+</style>
+
+<script type="module">
+  import createGlobe from "https://esm.sh/cobe@0.6.3";
+
+  // [lat, lng] of the consecutive points the journey arcs between.
+  const POINTS = [
+    [28.6139, 77.2090],   // 2003 - 2022
+    [51.5074, -0.1278],   // 2022 - 2026
+    [37.7749, -122.4194], // 2026 - present
+  ];
+  const ARC_COLOR = "#ffffff";
+
+  const wrap = document.querySelector(".globe-wrap");
+  const canvas = document.querySelector(".globe-canvas");
+  const arcs = document.querySelector(".globe-arcs");
+  const arcCtx = arcs.getContext("2d");
+
+  let size = wrap.clientWidth || 420;
+  let phi = 0;
+  let theta = 0.25;
+  let currentPhi = 0;
+
+  // Earth-fixed unit vector, matching cobe's own marker convention exactly
+  // (derived from cobe's source: [-cos t·cos(l-π), sin t, cos t·sin(l-π)]).
+  function toVec3([lat, lng]) {
+    const la = (lat * Math.PI) / 180;
+    const lo = (lng * Math.PI) / 180;
+    return [
+      Math.cos(la) * Math.cos(lo),
+      Math.sin(la),
+      -Math.cos(la) * Math.sin(lo),
+    ];
+  }
+
+  // Project an earth-fixed vector to screen space using cobe's rotation matrix
+  // L(theta, phi) and orthographic mapping (sphere radius = 0.4 of canvas).
+  function project(r, phi, theta) {
+    const cph = Math.cos(phi), sph = Math.sin(phi);
+    const cth = Math.cos(theta), sth = Math.sin(theta);
+    const fx = cph * r[0] + sph * r[2];
+    const fy = sph * sth * r[0] + cth * r[1] - cph * sth * r[2];
+    const fz = -sph * cth * r[0] + sth * r[1] + cph * cth * r[2];
+    return {
+      x: (0.5 + 0.4 * fx) * size,
+      y: (0.5 - 0.4 * fy) * size,
+      visible: fz > 0,
+    };
+  }
+
+  // Spherical interpolation between two unit vectors.
+  function slerp(a, b, t) {
+    let dot = a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    dot = Math.max(-1, Math.min(1, dot));
+    const omega = Math.acos(dot);
+    if (omega < 1e-6) return a;
+    const s = Math.sin(omega);
+    const k0 = Math.sin((1 - t) * omega) / s;
+    const k1 = Math.sin(t * omega) / s;
+    return [
+      a[0] * k0 + b[0] * k1,
+      a[1] * k0 + b[1] * k1,
+      a[2] * k0 + b[2] * k1,
+    ];
+  }
+
+  const vecs = POINTS.map(toVec3);
+
+  function drawArcs() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (arcs.width !== size * dpr) {
+      arcs.width = size * dpr;
+      arcs.height = size * dpr;
+    }
+    arcCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    arcCtx.clearRect(0, 0, size, size);
+
+    // arcs between consecutive points
+    arcCtx.strokeStyle = ARC_COLOR;
+    arcCtx.lineWidth = 1.5;
+    arcCtx.lineCap = "round";
+    for (let i = 0; i < vecs.length - 1; i++) {
+      const steps = 64;
+      arcCtx.beginPath();
+      let pen = false;
+      for (let s = 0; s <= steps; s++) {
+        const mid = slerp(vecs[i], vecs[i + 1], s / steps);
+        // lift the arc above the surface for a flight-path curve
+        const lift = 1 + 0.18 * Math.sin((Math.PI * s) / steps);
+        const p = project([mid[0] * lift, mid[1] * lift, mid[2] * lift], currentPhi, theta);
+        if (!p.visible) {
+          pen = false;
+          continue;
+        }
+        if (!pen) {
+          arcCtx.moveTo(p.x, p.y);
+          pen = true;
+        } else {
+          arcCtx.lineTo(p.x, p.y);
+        }
+      }
+      arcCtx.stroke();
+    }
+
+    // endpoint dots
+    for (const v of vecs) {
+      const p = project(v, currentPhi, theta);
+      if (!p.visible) continue;
+      arcCtx.beginPath();
+      arcCtx.fillStyle = ARC_COLOR;
+      arcCtx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+      arcCtx.fill();
+    }
+  }
+
+  const globe = createGlobe(canvas, {
+    devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+    width: size * 2,
+    height: size * 2,
+    phi: 0,
+    theta: theta,
+    dark: 1,
+    diffuse: 1.2,
+    mapSamples: 16000,
+    mapBrightness: 6,
+    baseColor: [0.28, 0.28, 0.32],
+    markerColor: [0.18, 0.83, 0.75],
+    glowColor: [0.12, 0.14, 0.18],
+    markers: POINTS.map((location) => ({ location, size: 0.05 })),
+    onRender: (state) => {
+      state.phi = phi;
+      currentPhi = phi;
+      phi += 0.004;
+      state.width = size * 2;
+      state.height = size * 2;
+      drawArcs();
+    },
+  });
+
+  requestAnimationFrame(() => (canvas.style.opacity = "1"));
+
+  let resizeRAF;
+  window.addEventListener("resize", () => {
+    cancelAnimationFrame(resizeRAF);
+    resizeRAF = requestAnimationFrame(() => {
+      size = wrap.clientWidth || size;
+    });
+  });
+</script>
+{{- end }}
+{{- /* Footer custom content area end */ -}}
