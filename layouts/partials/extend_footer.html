@@ -134,16 +134,6 @@
       }
       arcCtx.stroke();
     }
-
-    // endpoint dots
-    for (const v of vecs) {
-      const p = project(v, currentPhi, theta);
-      if (!p.visible) continue;
-      arcCtx.beginPath();
-      arcCtx.fillStyle = ARC_COLOR;
-      arcCtx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-      arcCtx.fill();
-    }
   }
 
   const globe = createGlobe(canvas, {
@@ -157,7 +147,7 @@
     mapSamples: 16000,
     mapBrightness: 6,
     baseColor: [0.28, 0.28, 0.32],
-    markerColor: [0.18, 0.83, 0.75],
+    markerColor: [1, 1, 1],
     glowColor: [0.12, 0.14, 0.18],
     markers: POINTS.map((location) => ({ location, size: 0.05 })),
     onRender: (state) => {
