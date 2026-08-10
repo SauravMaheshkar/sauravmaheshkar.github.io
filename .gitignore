@@ -1,8 +1,11 @@
-# Hugo
-public/
-resources/
-.hugo_build.lock
+# Astro
+dist/
+node_modules/
+.astro/
+
+# https://github.com/obra/superpowers/
+docs/superpowers/
+.superpowers/
 
 # OS
 **/.DS_Store
-
