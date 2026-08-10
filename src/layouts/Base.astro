@@ -1,0 +1,61 @@
+---
+import '@/styles/global.css'
+import Spidey from '@/components/Spidey.astro'
+import { SITE, NAV } from '@/consts'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const { title, description = SITE.description } = Astro.props
+const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
+
+// Every page through this layout gets a canonical link and OG/Twitter card
+// metadata, derived from the same URL. The one deliberate exception is
+// src/pages/posts/[slug].astro: those redirect stubs skip Base entirely and
+// set their own canonical to the external article, which must win instead.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <!-- The site is set entirely in this one file, so fetching it late would
+         flash fallback text on every page. crossorigin is required even
+         same-origin: fonts are always fetched in CORS mode. -->
+    <link rel="preload" href="/fonts/monaspace-xenon-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/index.xml" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body class="bg-bg text-fg antialiased">
+    <div class="mx-auto flex min-h-screen max-w-3xl flex-col px-6">
+      <header class="flex items-center justify-between py-8">
+        <a href="/" class="flex items-center gap-2.5 text-xl font-bold">
+          <Spidey />
+          {SITE.title}
+        </a>
+        <nav class="flex gap-4 text-sm text-muted">
+          {NAV.map((item) => <a href={item.href} class="hover:text-fg">{item.name}</a>)}
+        </nav>
+      </header>
+      <main class="flex-1"><slot /></main>
+      <footer class="py-8 text-xs text-muted">
+        &copy; {new Date().getFullYear()} {SITE.title}
+      </footer>
+    </div>
+  </body>
+</html>

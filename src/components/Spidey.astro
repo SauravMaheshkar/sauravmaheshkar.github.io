@@ -1,0 +1,52 @@
+---
+/**
+ * Sprite-sheet animation lifted from spideytracker.net: 76 frames of 74x119 in
+ * a single 5624px strip. The original drives it from JS with
+ * `setInterval(..., 1000/12)` stepping background-position; steps(76) over
+ * 76/12 = 6.3333s is the identical cadence with no script, so this ships as
+ * pure CSS and adds no island to any page.
+ *
+ * Two constraints, both learned the hard way:
+ *
+ * 1. Horizontal travel must be an exact pixel multiple of the displayed frame
+ *    width — here 22 x 76 = 1672px. A percentage does NOT work:
+ *    `background-position: -100%` resolves against (container - background),
+ *    which for a 76-frame sheet is 75/76ths of the distance, so every step
+ *    lands part-way into a frame and the sprite visibly flickers between two at
+ *    once. The width must also be a whole number for the same reason.
+ *
+ * 2. No responsive sizing, deliberately. This is sized to sit level with the
+ *    site title, which is `text-xl` at every breakpoint — its 28px line box is
+ *    why 22x35 works. Scaling the sprite at a breakpoint the text does not
+ *    scale at would break the very alignment it exists to have.
+ */
+---
+<div class="spidey" aria-hidden="true"></div>
+
+<style>
+  .spidey {
+    /* 22 x 35 keeps the 74:119 aspect and sits level with a 28px line box. */
+    width: 22px;
+    height: 35px;
+    flex: none;
+    background-image: url('/images/spidey-headturn.png');
+    background-repeat: no-repeat;
+    background-size: 1672px 35px; /* 22px x 76 frames */
+    image-rendering: pixelated;
+    animation: spidey-headturn 6.3333s steps(76) infinite;
+  }
+
+  @keyframes spidey-headturn {
+    from { background-position: 0 0 }
+    to   { background-position: -1672px 0 }
+  }
+
+  /* Motion is all this offers, so reduced motion holds it on frame 0 rather
+     than animating a character nobody asked to see move. */
+  @media (prefers-reduced-motion: reduce) {
+    .spidey {
+      animation: none;
+      background-position: 0 0;
+    }
+  }
+</style>

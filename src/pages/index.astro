@@ -1,0 +1,49 @@
+---
+import Base from '@/layouts/Base.astro'
+import Globe from '@/components/Globe.tsx'
+import SocialIcons from '@/components/SocialIcons.astro'
+import Clock from '@/components/Clock.tsx'
+import { HERO, SITE } from '@/consts'
+import { getSortedPosts } from '@/lib/posts'
+
+// Cards link straight to the external article. The /posts/<id>/ stubs still
+// exist and still redirect, but they are there for inbound links from
+// elsewhere — someone already on this site has no reason to bounce through one.
+const highlighted = (await getSortedPosts()).filter((p) => p.data.highlight)
+
+const fmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+})
+---
+<Base>
+  <section class="mx-auto mt-4 aspect-square w-full max-w-[420px]">
+    <Globe client:visible />
+  </section>
+
+  {/* Visually hidden, but the page still needs one: with the wordmark gone
+      there is no other h1, and a document whose only headings start at h2
+      reads as a fragment to screen readers and crawlers alike. */}
+  <h1 class="sr-only">{SITE.title}</h1>
+
+  <div class="mt-6 flex flex-col items-center gap-1">
+    <span class="font-mono text-[10px] tracking-widest text-muted">Local Time @ {HERO.city}</span>
+    <Clock client:visible />
+  </div>
+
+  <div class="mt-5 flex justify-center">
+    <SocialIcons />
+  </div>
+
+  <section class="mt-12">
+    <h2 class="mb-3 font-mono text-[10px] uppercase tracking-widest text-muted">Writing</h2>
+    <div class="space-y-2">
+      {highlighted.map((post) => (
+        <a href={post.data.externalURL}
+           class="block rounded-lg border border-border p-4 transition-colors hover:border-muted">
+          <h3 class="text-base font-semibold">{post.data.title}</h3>
+          <p class="mt-1 text-xs text-muted">{fmt.format(post.data.date)}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>
