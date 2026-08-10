@@ -1,0 +1,38 @@
+---
+interface Props {
+  href: string
+  title: string
+  date: Date
+}
+
+const { href, title, date } = Astro.props
+
+const fmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+})
+---
+{/* Ported from @cardcn/card-10.
+
+    `isolate` is load-bearing, not decoration. Without it this anchor is
+    `position: relative; z-index: auto`, which is not a stacking context, so the
+    -z-10 hatch escapes to the root context and paints beneath body's opaque
+    black background — invisible. `isolate` traps it inside the card.
+
+    Geometry matches upstream, which wraps a bordered card in a bare div and
+    insets the hatch by 4px from the outer edge, leaving 2px of background
+    between the border and the first stripe. Collapsed to a single box, an
+    absolutely positioned child's containing block is the *padding* box, which
+    already starts inside the 2px border — so inset-0.5 lands the hatch at that
+    same 4px. inset-1 would push it to 6px and change the look.
+
+    var(--color-border), not upstream's var(--border): this project declares its
+    tokens inside @theme, so Tailwind emits --color-border and nothing else. An
+    unresolvable colour stop invalidates the whole gradient and the card quietly
+    renders as a plain box. tests/url-parity.test.ts pins this. */}
+<a href={href}
+   class="group relative isolate block overflow-hidden rounded-xl border-2 border-border p-6">
+  <div class="absolute inset-0.5 -z-10 rounded-lg opacity-50 transition-opacity group-hover:opacity-100"
+       style="background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, var(--color-border) 2px, var(--color-border) 4px)" />
+  <h3 class="text-base font-semibold">{title}</h3>
+  <p class="mt-1 text-xs text-muted">{fmt.format(date)}</p>
+</a>

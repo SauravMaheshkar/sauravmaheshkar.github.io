@@ -150,3 +150,70 @@ test('llms.txt lists every post once, correctly formatted, in date-descending or
     )
   }
 })
+
+test('the home page links every highlighted post straight to its externalURL', async () => {
+  const posts = await readPostFiles()
+  const highlighted = posts.filter((p) => p.fm.highlight === 'true')
+  // Without this, every assertion below passes vacuously the day `highlight`
+  // is renamed or dropped from the frontmatter schema.
+  expect(highlighted.length, 'no posts are marked `highlight: true`').toBeGreaterThan(0)
+
+  const html = readFileSync(path.join(DIST, 'index.html'), 'utf8')
+
+  for (const { slug, fm } of highlighted) {
+    expect(html, `${slug} is missing from the home page highlights`).toContain(
+      `href="${fm.externalURL}"`,
+    )
+    // src/pages/index.astro documents this choice in a comment; a comment is
+    // not a test. Someone "fixing" the card to use the local permalink would
+    // break nothing else in this suite.
+    //
+    // Both forms, and the relative one is the load-bearing half: Astro emits
+    // site-root hrefs as-authored, so the absolute form is what a regression
+    // would *not* look like. Asserting only against SITE.url gives an assertion
+    // that cannot fail.
+    for (const stub of [`href="/posts/${slug}/"`, `href="${SITE.url}/posts/${slug}/"`]) {
+      expect(html, `${slug} bounces through the local redirect stub`).not.toContain(stub)
+    }
+  }
+
+  // Two posts share an externalURL (see the RSS GUID test above), so a
+  // non-highlighted post can legitimately carry a URL a highlighted one also
+  // uses. Those have to be dropped before asserting absence, or this false-fails
+  // on a page that is perfectly correct.
+  const shown = new Set(highlighted.map((p) => p.fm.externalURL))
+  for (const { slug, fm } of posts) {
+    if (fm.highlight === 'true' || shown.has(fm.externalURL)) continue
+    expect(html, `${slug} is not highlighted but appears on the home page`).not.toContain(
+      `href="${fm.externalURL}"`,
+    )
+  }
+})
+
+test('the highlight card hatch references a colour token that actually exists', () => {
+  // @cardcn/card-10 upstream reads var(--border). This project declares its
+  // tokens inside @theme, so Tailwind emits --color-border and there is no
+  // --border alias. An unresolvable colour stop invalidates the entire
+  // repeating-linear-gradient, and the card silently degrades to a plain
+  // bordered box — which is exactly what it looked like before the port, so no
+  // other assertion here would notice.
+  const html = readFileSync(path.join(DIST, 'index.html'), 'utf8')
+  expect(html, 'the highlight card hatch is missing from the home page').toContain(
+    'repeating-linear-gradient(45deg',
+  )
+  expect(html, 'the hatch names a token this project does not declare').toContain(
+    'var(--color-border)',
+  )
+
+  // Asserting the reference alone would still pass if the token were renamed in
+  // global.css, so check that something actually declares it. Astro emits the
+  // stylesheet to dist/_astro/, but inlines small ones into the document, so
+  // both are candidates.
+  const sheets = readdirSync(path.join(DIST, '_astro'))
+    .filter((f) => f.endsWith('.css'))
+    .map((f) => readFileSync(path.join(DIST, '_astro', f), 'utf8'))
+  expect(
+    [...sheets, html].some((css) => css.includes('--color-border:')),
+    'nothing declares --color-border, so the hatch gradient resolves to nothing',
+  ).toBe(true)
+})
