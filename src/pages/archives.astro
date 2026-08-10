@@ -1,0 +1,10 @@
+---
+import Base from '@/layouts/Base.astro'
+import PostArchiveList from '@/components/PostArchiveList.astro'
+import { getSortedPosts } from '@/lib/posts'
+
+const posts = await getSortedPosts()
+---
+<Base title="Archive">
+  <PostArchiveList title="Archive" posts={posts} />
+</Base>

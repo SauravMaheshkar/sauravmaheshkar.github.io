@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* Monaspace Xenon (GitHub Next), SIL OFL 1.1 — licence at /fonts/monaspace-OFL.txt.
+   Self-hosted rather than CDN-loaded: one fewer origin, no third-party request,
+   and the file is small enough to be uncontroversial.
+
+   The shipped file is a subset. Upstream's variable woff2 is 583 KB, most of it
+   glyphs and axes this site never uses. Regenerate with:
+
+     pyftsubset "Monaspace Xenon Var.woff2" \
+       --unicodes="U+0020-007E,U+00A0-00FF,U+2000-206F,U+2190-21FF,U+2122,U+2713" \
+       --flavor=woff2 --output-file=subset.woff2
+     fonttools varLib.instancer subset.woff2 wdth=100 slnt=0 -o monaspace-xenon-var.woff2
+
+   That is 583 KB -> 41 KB. The `slnt=0` pin drops real italics, which is fine
+   because nothing on the site renders <em>; if that changes, re-run without it
+   (~59 KB) rather than letting the browser synthesise an oblique. */
+@font-face {
+  font-family: "Monaspace Xenon";
+  src: url("/fonts/monaspace-xenon-var.woff2") format("woff2-variations");
+  /* One file covers the whole range, so every weight the site uses (400 body,
+     600/700 headings, 800 wordmark) comes from this single request. */
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Monaspace Xenon", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: "Monaspace Xenon", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Deletes Tailwind's entire default colour palette, so `bg-zinc-900`,
+     `text-red-500` and friends stop existing as utilities. Only the tokens
+     declared below generate any CSS. This is the enforcement half of the
+     token system; `tests/tokens.test.ts` is the half that fails loudly,
+     because an unknown utility in v4 silently generates nothing rather than
+     erroring. Anything added here becomes part of the palette by definition,
+     so add deliberately. */
+  --color-*: initial;
+
+  --color-bg: rgb(0, 0, 0);
+  --color-fg: rgb(218, 218, 219);
+  --color-muted: rgb(127, 128, 133);
+  --color-border: rgb(47, 48, 52);
+  --color-accent: rgb(235, 82, 71);
+
+  /* Aliases for the shadcn convention names (background/foreground/input)
+     that registry components are written against. Values trace back to the
+     tokens above, not new colours, since this site is dark-only with no
+     `.dark` class toggle: shadcn's own generated light/dark theme pair
+     doesn't apply here. */
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-fg);
+  --color-input: var(--color-border);
+
+  /* Tailwind's `inherit` keyword lives in the colour namespace, so the reset
+     above takes it with everything else. The vendored flip clock's card faces
+     use bg-inherit/text-inherit, so it has to come back. */
+  --color-inherit: inherit;
+}
+
+html {
+  color-scheme: dark;
+  background-color: var(--color-bg);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+}

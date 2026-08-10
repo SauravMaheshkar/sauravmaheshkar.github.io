@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  title: string
+  posts: CollectionEntry<'posts'>[]
+}
+
+// Rows link straight to the external article. The /posts/<id>/ stubs still
+// exist and still redirect, but they serve inbound links from elsewhere —
+// someone already on this site has no reason to bounce through one.
+const { title, posts } = Astro.props
+
+const byYear = new Map<number, typeof posts>()
+for (const post of posts) {
+  const year = post.data.date.getUTCFullYear()
+  byYear.set(year, [...(byYear.get(year) ?? []), post])
+}
+
+const fmt = new Intl.DateTimeFormat('en-US', {
+  month: 'long', day: 'numeric', timeZone: 'UTC',
+})
+---
+<h1 class="mb-8 text-3xl font-bold">{title}</h1>
+{[...byYear.entries()].map(([year, entries]) => (
+  <section class="mb-8">
+    <h2 class="mb-2 text-2xl font-bold">{year} <span class="text-sm text-muted">{entries.length}</span></h2>
+    {entries.map((post) => (
+      <a href={post.data.externalURL} class="flex gap-3 border-t border-border py-2">
+        <span class="shrink-0 text-xs text-muted">{fmt.format(post.data.date)}</span>
+        <span class="text-sm">{post.data.title}</span>
+      </a>
+    ))}
+  </section>
+))}
