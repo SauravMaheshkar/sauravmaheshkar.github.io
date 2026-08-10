@@ -1,0 +1,42 @@
+# Slugs of /posts/<slug>/ URLs that are live in production (indexed by
+# search engines, bookmarked, linked from external sites). This list is
+# generated from Hugo's build output, not derived from src/content/posts/,
+# so it is the one fixture in this suite that is genuinely independent of
+# the implementation: renaming or deleting a post's source file must not
+# silently 404 an inbound link.
+#
+# This list may only ever grow. Removing a line here is a deliberate
+# decision to break an inbound link, not something to do to make a test
+# pass — if a post is renamed, add its new slug and keep this one.
+adalora
+chatbot-docs
+chebgcn
+compressed-nns-forget
+cot-tot-got
+dino
+fnet
+gat
+gcl
+gcn
+gin
+gmlp
+gnn
+gnn-lspe
+graphcl
+graphsage
+image-classification-flax
+intrinsic-dimensions
+lora
+mlp-mixer
+monet
+mpgnn
+multitask-grl
+multiview-grl
+prompt-tuning
+ptuning
+qlora
+resgatedgcn
+resmlp
+sam2
+training-loop-jax
+vicreg
