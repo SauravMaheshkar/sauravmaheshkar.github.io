@@ -1,7 +1,7 @@
-[![Deploy Hugo site to Pages](https://github.com/SauravMaheshkar/sauravmaheshkar.github.io/actions/workflows/hugo.yaml/badge.svg?branch=main)](https://github.com/SauravMaheshkar/sauravmaheshkar.github.io/actions/workflows/hugo.yaml)
+[![Deploy Astro site to Pages](https://github.com/SauravMaheshkar/sauravmaheshkar.github.io/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/SauravMaheshkar/sauravmaheshkar.github.io/actions/workflows/deploy.yml)
 
-Source code for my personal website based on the [papermod](https://github.com/adityatelange/hugo-PaperMod) theme with some modifications from the original theme:
-* Most of my articles are on external sites, so I added a [new layout](../layouts/posts/external-redirect.html) to redirect posts to external links.
-* I had to modify some of the code for the introduction section to make markdown lists work properly.
-* Instead of showing all the articles on the home page as is the default with the theme I only wanted to showcase some highlighted articles as per my choice.
+Source code for my personal website, built with [Astro](https://astro.build) and deployed to GitHub Pages.
 
+* Most of my writing lives on external sites (Weights & Biases reports). `/posts/<slug>/` pages are frontmatter-only stubs that redirect there.
+* React islands (globe, SF clock, flip clock, stretchy footer) hydrate via `@astrojs/react`; everything else ships as static HTML.
+* Styling is Tailwind CSS, dark theme only.
