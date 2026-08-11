@@ -57,6 +57,29 @@
      above takes it with everything else. The vendored flip clock's card faces
      use bg-inherit/text-inherit, so it has to come back. */
   --color-inherit: inherit;
+
+  /* The footer record's rotation. Declared here rather than reaching for
+     Tailwind's built-in `animate-spin` for two reasons, the second of which
+     cost a debugging round already:
+
+       1. `animate-spin` is 1s. A 33rpm record reads as a blur at that speed;
+          4s is roughly the slowest rotation that still looks driven.
+       2. v4 emits `@keyframes spin` ONLY as a side effect of the `animate-spin`
+          utility appearing in scanned source. Nothing here uses it, so an
+          inline `animation: spin 4s ...` names a keyframe that does not exist
+          and the record silently sits still — no error, no warning, no
+          unstyled-looking markup to notice by eye.
+
+     Declaring the keyframes here makes the animation a first-class part of the
+     design system instead of a utility's leftovers. tests/footer.test.ts pins
+     that the emitted CSS actually contains it. */
+  --animate-record-spin: record-spin 4s linear infinite;
+}
+
+@keyframes record-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 html {

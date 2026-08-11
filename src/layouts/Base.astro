@@ -53,8 +53,33 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         </nav>
       </header>
       <main class="flex-1"><slot /></main>
-      <footer class="py-8 text-xs text-muted">
-        &copy; {new Date().getFullYear()} {SITE.title}
+      {/* The rule and the tighter padding are driven by the slot being filled,
+          not by a `showPlayer` prop: the line exists to separate the copyright
+          from whatever sits beside it, so a page with nothing beside it has
+          nothing to separate. That makes "separator on the home page only" a
+          property of the markup rather than a flag two files apart that can
+          drift. Padding shrinks because the record is 112px on its own — py-8
+          on top of that gives the footer more air than the header has.
+
+          mt-12 is load-bearing, not taste. py-6 sits INSIDE the border, so it
+          only ever separates the rule from the copyright beneath it; <main>
+          carries no bottom padding, so without a margin the rule butts
+          straight into the last card above. The gap has to come from outside
+          the border or it only exists on one side. 12 matches the mt-12 the
+          Writing section already uses, so the footer reads as the next section
+          rather than as something bolted underneath.
+
+          Only the bordered branch needs it: a page with no rule already gets
+          its air from py-8, and adding a margin there would just push the
+          copyright around for no reason. */}
+      <footer
+        class:list={[
+          'flex items-center justify-between text-xs text-muted',
+          Astro.slots.has('footer') ? 'mt-12 border-t border-border py-6' : 'py-8',
+        ]}
+      >
+        <span>&copy; {new Date().getFullYear()} {SITE.title}</span>
+        <slot name="footer" />
       </footer>
     </div>
   </body>

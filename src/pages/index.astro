@@ -4,6 +4,7 @@ import Globe from '@/components/Globe.tsx'
 import SocialIcons from '@/components/SocialIcons.astro'
 import Clock from '@/components/Clock.tsx'
 import HighlightCard from '@/components/HighlightCard.astro'
+import MusicPlayer from '@/components/MusicPlayer.tsx'
 import { HERO, SITE } from '@/consts'
 import { getSortedPosts } from '@/lib/posts'
 
@@ -39,4 +40,8 @@ const highlighted = (await getSortedPosts()).filter((p) => p.data.highlight)
       ))}
     </div>
   </section>
+
+  {/* client:visible, matching Globe and Clock: the footer is below the fold on
+      every viewport, and nobody can click a record they have not scrolled to. */}
+  <MusicPlayer slot="footer" client:visible />
 </Base>
