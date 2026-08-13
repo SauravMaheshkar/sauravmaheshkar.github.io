@@ -40,6 +40,86 @@ export const GLOBE_COLORS = {
 } as const satisfies Record<string, readonly [number, number, number]>
 
 /**
+ * The places the globe marks, in the order they were lived in. Arcs are drawn
+ * between consecutive stops rather than listed as their own pairs, so adding a
+ * city extends the route instead of quietly relying on whoever adds it to
+ * remember a second edit.
+ *
+ * `id` is not decoration and is not free to churn. cobe mints a CSS anchor
+ * named `--cobe-{id}` and a visibility custom property `--cobe-visible-{id}`
+ * for every marker carrying one, and `.globe-label` in global.css binds to
+ * those names. Renaming an id renames a live CSS custom property; the label
+ * then anchors to nothing and, since an unresolved anchor is not an error,
+ * fails silently. tests/globe.test.ts pins the pairing.
+ */
+export type Stop = {
+  readonly id: string
+  readonly label: string
+  readonly location: readonly [number, number]
+  /**
+   * Hangs this stop's label under its marker instead of over it. A hand
+   * placement, and it exists for one reason: two stops close enough together
+   * anchor two ~80px chips within a few pixels of each other, and neither is
+   * then readable. Nothing detects that automatically, so it is declared.
+   */
+  readonly labelBelow?: boolean
+  /**
+   * A photo of this stop, popped as a polaroid while its label is hovered or
+   * focused. Optional, and a stop without one renders no polaroid and takes no
+   * tab stop, so the feature simply does not exist for it.
+   *
+   * Square crop, 120px minimum: they display at 60px and would otherwise be
+   * soft on any retina screen. Anything here ships in the build, so it wants
+   * to be owned or clearly licensed, same bar as the record cover.
+   */
+  readonly photo?: string
+}
+
+/*
+ * The photos below started as Saurav's phone shots (DEL/MCR/LDN/SFO, 1.5k-4k
+ * on the long edge, up to 4MB each). They are resampled so the LONG edge is
+ * 260px, at JPEG quality 80 — 19-25KB apiece:
+ *
+ *     sips -Z 260 -s format jpeg -s formatOptions 80 IN.jpg --out OUT.jpg
+ *
+ * Not cropped. Three are portrait and one is landscape, and they keep it;
+ * global.css caps both axes at 130px and lets each photo pick its own shape,
+ * so a 2x screen still gets them pixel for pixel. There is no hover on touch,
+ * so 3x phone screens never see these at all.
+ *
+ * Resize the same way rather than dropping a full-size photo in: at 4MB each
+ * these would outweigh every other asset on the site put together, eighty
+ * times over, to be shown two inches across.
+ */
+export const JOURNEY: readonly Stop[] = [
+  { id: 'delhi', label: 'Delhi', location: [28.6139, 77.209], photo: '/images/delhi.jpg' },
+  {
+    id: 'manchester',
+    label: 'Manchester',
+    location: [53.4808, -2.2426],
+    photo: '/images/manchester.jpg',
+  },
+  // 262km from Manchester, which is 2.36° of arc — under 7px on a 420px globe,
+  // against chips an order of magnitude wider than that. London goes below and
+  // Manchester stays above, in that order rather than the reverse: Manchester
+  // is the northern of the two and so sits higher on screen at every rotation,
+  // so this is the arrangement where neither chip lands on the other's dot.
+  {
+    id: 'london',
+    label: 'London',
+    location: [51.5074, -0.1278],
+    labelBelow: true,
+    photo: '/images/london.jpg',
+  },
+  {
+    id: 'sf',
+    label: 'San Francisco',
+    location: [37.7749, -122.4194],
+    photo: '/images/sf.jpg',
+  },
+]
+
+/**
  * The record on the home page footer.
  *
  * The track is Saurav's own, written and exported from GarageBand, so the site

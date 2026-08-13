@@ -14,7 +14,25 @@ import { getSortedPosts } from '@/lib/posts'
 const highlighted = (await getSortedPosts()).filter((p) => p.data.highlight)
 ---
 <Base>
-  <section class="mx-auto mt-4 aspect-square w-full max-w-[420px]">
+  {/* Headroom, not taste, and it is derived — do not round it off. Manchester
+      is the northernmost stop and climbs to within 53px of the top of this
+      box; a popped photo reaches 150px above its marker (8px gap, then 6px of
+      border, 130px of image and 6px more border). That clears the top edge by
+      97px, of which the header's own py-8 donates 32px, leaving 65px for this
+      margin. 80px covers it with 15px over; 64px would be a pixel short.
+
+      So it is tied to the photo's size in src/styles/global.css and moves with
+      it — every 4px added to that image needs another 4px here. Growing the
+      photo without growing this lands a picture on top of the nav, and only
+      while someone happens to be hovering a northern city, which is the sort
+      of thing that ships.
+
+      It has to be margin. This box is aspect-square and Tailwind is
+      border-box, so padding here would hold the outer box square and shrink
+      the content box instead — and since cobe sizes its backing store from
+      clientWidth (square) while the canvas is CSS-stretched to fill, the globe
+      would quietly render as a vertically squashed ellipse. */}
+  <section class="mx-auto mt-20 aspect-square w-full max-w-[420px]">
     <Globe client:visible />
   </section>
 

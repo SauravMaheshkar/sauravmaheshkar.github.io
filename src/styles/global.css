@@ -82,6 +82,173 @@
   }
 }
 
+/* The globe's floating city labels.
+
+   Plain CSS rather than utilities because the two declarations that matter,
+   `bottom: anchor(top)` and `left: anchor(center)`, have no Tailwind
+   equivalent; writing them as arbitrary values would smuggle CSS through a
+   syntax that cannot check it and would need an exemption in
+   tests/tokens.test.ts to boot.
+
+   The anchor itself is a 1px div cobe positions over the marker each frame,
+   named `--cobe-{id}`. Src/components/Globe.tsx supplies the binding inline,
+   per label; everything shared lives here. Colours are inverted against the
+   page (light chip, dark text) so the label stays legible over whichever part
+   of the globe has rotated underneath it. */
+.globe-label {
+  position: absolute;
+  bottom: anchor(top);
+  left: anchor(center);
+  translate: -50% 0;
+  margin-bottom: 8px;
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  background: var(--color-fg);
+  color: var(--color-bg);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  /* Supplied per label by Globe.tsx, and only while that marker faces the
+     camera. `none` is the default on purpose: a label that never sets it is
+     inert, which is the safe way round. */
+  pointer-events: var(--label-hit, none);
+  /* Two different clocks. opacity and filter are the globe's — long, because it
+     turns slowly and a label crossing the silhouette should dissolve rather
+     than blink. background and colour are the cursor's, and want to keep up
+     with it. */
+  transition: opacity 0.5s, filter 0.5s, background-color 0.2s, color 0.2s;
+}
+
+/* The tail pointing back down at the marker. */
+.globe-label::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate3d(-50%, -1px, 0);
+  border: 5px solid transparent;
+  border-top-color: var(--color-fg);
+  /* Matches the chip's own paint, so the whole label leaves together. */
+  transition: opacity 0.2s;
+}
+
+/* Hangs a label under its marker rather than over it, tail and all. The only
+   reason this exists is chips colliding when two stops are close together —
+   see `labelBelow` in src/consts.ts. Both `bottom` and `margin-bottom` have to
+   be unset explicitly, since the base rule set them and this is the same
+   element, not a variant of it. */
+.globe-label--below {
+  bottom: auto;
+  top: anchor(bottom);
+  margin-bottom: 0;
+  margin-top: 8px;
+}
+
+.globe-label--below::after {
+  top: auto;
+  bottom: 100%;
+  transform: translate3d(-50%, 1px, 0);
+  border-top-color: transparent;
+  border-bottom-color: var(--color-fg);
+}
+
+/* The photo a label pops while it is hovered or focused.
+
+   Nested inside the label rather than anchored to the marker itself, which
+   buys three things for free: it inherits the label's opacity and blur, so it
+   cannot outlive the marker rotating out of view; it follows the label's
+   placement, so a `labelBelow` stop pops downward and overflows nothing; and
+   hovering the photo keeps :hover on the label, so the thing does not vanish
+   the moment you reach for it. */
+.globe-polaroid {
+  position: absolute;
+  /* Sizes to the photo and ignores how much room is going spare, which is not
+     fussiness — see the note on max-width below. */
+  width: max-content;
+  /* Bottom edge flush with the chip's, so the photo grows upward out of where
+     the name was and its near edge stays put. It overlaps the chip rather than
+     sitting above it, which is also why no gap has to be bridged: there is
+     nowhere for the pointer to fall through on its way up. */
+  bottom: 0;
+  left: 50%;
+  translate: -50% 0;
+  opacity: 0;
+  /* Invisible is not enough — an opacity-0 polaroid that still takes pointer
+     events is a dead zone hanging over every label, swallowing drags. It
+     becomes a target only once it is on screen. */
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.globe-polaroid img {
+  display: block;
+  /* Both axes capped, neither one fixed, and no width/height on the element:
+     the photo scales down inside a 130px box under its own aspect ratio, so a
+     portrait comes out 98x130 and a landscape 130x98. Nothing is cropped and
+     nothing is stretched — whatever shape the camera was held in, that is the
+     shape on screen.
+
+     max-width in px rather than leaving it to Tailwind is load-bearing.
+     Preflight sets `img { max-width: 100% }`, and 100% here means 100% of
+     .globe-polaroid, which is absolutely positioned with left: 50% and no
+     width of its own — so it shrink-to-fits against whatever narrow strip is
+     left beside a short chip like DELHI. The image sizes off the parent, the
+     parent sizes off the image, and the resolution collapsed the width to
+     ~20px while an explicit height held it at 120px: four photos rendered as
+     thin vertical slivers. An absolute length breaks the circle, and
+     `width: max-content` on the parent keeps it broken. */
+  max-width: 130px;
+  max-height: 130px;
+  /* A plain white edge, not a polaroid frame. The heavy bottom lip was the
+     silhouette of a Polaroid print, which reads as a gimmick once the photo is
+     big enough to look at properly. */
+  border: 6px solid var(--color-fg);
+  background: var(--color-fg);
+}
+
+/* A label hanging under its marker grows its photo downward too, so the pair
+   never straddles the dot. */
+.globe-label--below .globe-polaroid {
+  bottom: auto;
+  top: 0;
+}
+
+/* The swap. The chip does not go anywhere — it keeps its box, so it keeps
+   holding the polaroid and keeps holding the hover — it simply stops painting,
+   and the photo it was hiding behind comes up in its place. Nothing reflows,
+   and the pointer never has to leave the element it started on. */
+.globe-label:hover .globe-polaroid,
+.globe-label:focus-visible .globe-polaroid {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.globe-label:hover,
+.globe-label:focus-visible {
+  background: transparent;
+  color: transparent;
+}
+
+/* Including the tail, which would otherwise be a small arrow pointing at a
+   marker from under a photo that has no need of it. */
+.globe-label:hover::after,
+.globe-label:focus-visible::after {
+  opacity: 0;
+}
+
+/* Anchor positioning is Chrome 125+, Safari 26+, Firefox 147+. Everywhere else
+   `bottom: anchor(top)` is simply an invalid declaration, which means the
+   labels do not fail to appear — they fall back to `auto` insets and stack in
+   a heap over the top-left of the globe. cobe keeps setting the visibility
+   custom properties regardless, so they would be opaque while doing it. Hide
+   them instead; the markers alone still read. */
+@supports not (anchor-name: --test) {
+  .globe-label {
+    display: none;
+  }
+}
+
 html {
   color-scheme: dark;
   background-color: var(--color-bg);
